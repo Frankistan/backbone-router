@@ -18,7 +18,7 @@
 	 * List of methods from the original Backbone.Router that need to be mapped on the new one
 	 * @type {Array}
 	 */
-	var backboneRouterMethods = ["on", "off", "once", "listenTo", "listenToOnce", "stopListening", "trigger"]
+	var backboneRouterMethods = ["on", "off", "once", "listenTo", "listenToOnce", "stopListening", "trigger"];
 
 	/**
 	 * Instance holder for the actual Backbone.Router
@@ -136,9 +136,16 @@
 				else {
 					this.dispatcher = app;
 				}
-			} else {
-				this.log("[Backbone.Router] Could not start router, missing dispatcher instance");
-				return false;
+			}
+
+			// Ensure that the dispatcher has the expected method
+			// i.e. The method "trigger" of Backbone.Events
+			var methods = _.filter(["trigger"], function(method) {
+				return _.isFunction(self.dispatcher[method]);
+			});
+
+			if (_.isEmpty(methods)) {
+				throw "[Backbone.Router.start] Missing a correct dispatcher object, needs to be an instance of Backbone.Events";
 			}
 
 			this.options.log("[Backbone.Router.start] Starting router");
@@ -349,9 +356,10 @@
 						this.processControllers("login");
 					} else {
 						this.options.log("[Backbone.Router] Skipping route '" + currentName +
-							"', " + (this.options.authed ? "" : "not ") + "logged in");
+							"', " + (this.options.authed ? "already " : "not ") + "logged in");
 
 						// Execute 403 controller
+						// @todo Apply better/finer logic for when the 403 controller should be executed
 						this.processControllers("403", [this.options.pushState ?
 							window.location.pathname.substring(1) : window.location.hash.substring(1)]);
 					}
@@ -620,9 +628,14 @@
 				args = [args];
 			}
 
-			_.forEach(extendedController[name].wrappers, function(callback) {
-				callback.call(self, args, trigger);
-			});
+			// Check if the given controller actually exists
+			if (extendedController[name]) {
+				_.forEach(extendedController[name].wrappers, function(callback) {
+					callback.call(self, args, trigger);
+				});
+			} else {
+				this.options.log("[Backbone.Router.processControllers] Inexisting controller: " + name);
+			}
 		},
 
 
@@ -783,7 +796,7 @@
 			// Forward the call to the original Backbone.Router instance
 			router[fn].apply(router, arguments);
 		};
-	})
+	});
 
 
 })(window);
