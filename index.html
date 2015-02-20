@@ -4,9 +4,11 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
+    <link rel="stylesheet" type="text/css" href="stylesheets/prism.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
 
     <title>Backbone-router by citizen-media</title>
   </head>
@@ -15,8 +17,13 @@
 
     <header>
       <div class="container">
-        <h1>Backbone-router</h1>
-        <h2>Routing Backbone with style \o/</h2>
+        <div>
+          <img src="/images/Backbone.js_logoGreen.png" alt="logo" title="">
+          <div>
+            <h1>Backbone-router</h1>
+            <h2>Routing Backbone with style \o/</h2>
+          </div>
+        </div>
 
         <section id="downloads">
           <a href="https://github.com/citizen-media/backbone-router/zipball/master" class="btn">Download as .zip</a>
@@ -47,8 +54,7 @@
 
 <p>You can install the library via bower:</p>
 
-<pre><code>bower install backbone-router
-</code></pre>
+<pre><code class="language-javascript">bower install backbone-router</code></pre>
 
 <h2>
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
@@ -71,32 +77,33 @@
 
 <p>Let's just jump right in with an example:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// Create a marionette app instance</span>
-<span class="pl-s">var</span> App <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Backbone.Marionette</span>.Application();
+<pre class="line-numbers"><code class="language-javascript">
+// Create a marionette app instance
+var App = new Backbone.Marionette.Application();
 
-<span class="pl-c">// Start route declarations</span>
-Backbone.Router.map(<span class="pl-st">function</span>() {
-  <span class="pl-c">// Declare a route named 'home'</span>
-  <span class="pl-v">this</span>.route(<span class="pl-s1"><span class="pl-pds">"</span>home<span class="pl-pds">"</span></span>, {
-    <span class="pl-c">// The url to which the route will respond</span>
-    <span class="pl-s1"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>,
-    <span class="pl-c">// Method to be executed when the given path is intercepted</span>
-    <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">action</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>() {
-      <span class="pl-c">// Do something fantastic \o/</span>
+// Start route declarations
+Backbone.Router.map(function() {
+  // Declare a route named 'home'
+  this.route("home", {
+    // The url to which the route will respond
+    "path": "/",
+    // Method to be executed when the given path is intercepted
+    "action": function() {
+      // Do something fantastic \o/
     }
   });
 
-  <span class="pl-c">// Declare other routes...</span>
+  // Declare other routes...
 });
 
-<span class="pl-c">// Wait for document ready event</span>
-$(<span class="pl-st">function</span>() {
-  <span class="pl-c">// Start the marionette app</span>
-  App.<span class="pl-sc">start</span>();
+// Wait for document ready event
+$(function() {
+  // Start the marionette app
+  App.start();
 
-  <span class="pl-c">// Start the router passing the marionette app instance</span>
-  Backbone.Router.<span class="pl-sc">start</span>(App);
-});</pre></div>
+  // Start the router passing the marionette app instance
+  Backbone.Router.start(App);
+});</code></pre>
 
 <h2>
 <a id="start-routing" class="anchor" href="#start-routing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start routing</h2>
@@ -114,50 +121,54 @@ $(<span class="pl-st">function</span>() {
 
 <p>Building on the previous script, here is an example:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// Create app</span>
-<span class="pl-s">var</span> App <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Backbone.Marionette</span>.Application();
+<pre class="line-numbers"><code class="language-javascript">
+// Create app
+var App = new Backbone.Marionette.Application();
 
-<span class="pl-c">// Define some routes ...</span>
+// Define some routes ...
 
-<span class="pl-c">// Start the marionette app</span>
-App.<span class="pl-sc">start</span>();
+// Start the marionette app
+App.start();
 
-<span class="pl-c">// Start the router passing the marionette app instance and an options object</span>
-Backbone.Router.<span class="pl-sc">start</span>(App, {
-  <span class="pl-c">// Root url for all routes, passed to Backbone.history</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>/admin<span class="pl-pds">"</span></span>,
+// Start the router passing the marionette app
+// instance and an options object
+Backbone.Router.start(App, {
+  // Root url for all routes, passed to Backbone.history
+  "root": "/admin",
 
-  <span class="pl-c">// Activate html5 pushState or not, true by default</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>pushState<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  // Activate html5 pushState or not, true by default
+  "pushState": false,
 
-  <span class="pl-c">// Whether the user is currently logged in or not</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>authed<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  // Whether the user is currently logged in or not
+  "authed": false,
 
-  <span class="pl-c">// If not logged in, redirect the user to a route named "login" (if it exists)</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>redirectToLogin<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  // If not logged in, redirect the user to a
+  // route named "login" (if it exists)
+  "redirectToLogin": false,
 
-  <span class="pl-c">// Print out routing debug information to the console</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>debug<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span>
-});</pre></div>
+  // Print out routing debug information to the console
+  "debug": true
+});</code></pre>
 
 <p>Or passing a <code>Backbone.Events</code> copy:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// Copy Backbone.Events</span>
-<span class="pl-s">var</span> dispatcher <span class="pl-k">=</span> _.extend({}, Backbone.Events);
+<pre class="line-numbers"><code class="language-javascript">
+// Copy Backbone.Events
+var dispatcher = _.extend({}, Backbone.Events);
 
-<span class="pl-c">// Start router</span>
-Backbone.Router.<span class="pl-sc">start</span>(dispatcher);</pre></div>
+// Start router
+Backbone.Router.start(dispatcher);</code></pre>
 
 <p>The dispatcher can also be overridden before the router is started in this way:</p>
 
-<div class="highlight highlight-javascript"><pre>Backbone.Router.dispatcher <span class="pl-k">=</span> _.extend({}, Backbone.Events);</pre></div>
+<pre><code class="language-javascript">Backbone.Router.dispatcher = _.extend({}, Backbone.Events);</code></pre>
 
 <h2>
 <a id="router-go" class="anchor" href="#router-go" aria-hidden="true"><span class="octicon octicon-link"></span></a>Router go!</h2>
 
 <p>To redirect the user to a certain route when, for example, he clicks a link simply use the <code>go</code> method.</p>
 
-<div class="highlight highlight-javascript"><pre>Backbone.Router.<span class="pl-s3">go</span>(<span class="pl-s1"><span class="pl-pds">"</span>home<span class="pl-pds">"</span></span>);</pre></div>
+<pre><code class="language-javascript">Backbone.Router.go("home");</code></pre>
 
 <p><strong>Parameters</strong></p>
 
@@ -170,77 +181,82 @@ Backbone.Router.<span class="pl-sc">start</span>(dispatcher);</pre></div>
 
 <p>Let's define a route that takes a parameter:</p>
 
-<div class="highlight highlight-javascript"><pre>Backbone.Router.map(<span class="pl-st">function</span>() {
-  <span class="pl-c">// Declare a user profile page</span>
-  <span class="pl-v">this</span>.route(<span class="pl-s1"><span class="pl-pds">"</span>user_profile<span class="pl-pds">"</span></span>, {
-    <span class="pl-s1"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>/user/:id<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">action</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>(<span class="pl-vpf">userId</span>) {
-      <span class="pl-c">// Render user profile page</span>
+<pre class="line-numbers"><code class="language-javascript">
+Backbone.Router.map(function() {
+  // Declare a user profile page
+  this.route("user_profile", {
+    "path": "/user/:id",
+    "action": function(userId) {
+      // Render user profile page
     }
   });
-})</pre></div>
+});</code></pre>
 
 <p>Considering the current page contains a link like this:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-k">&lt;</span>a href<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>/user/42<span class="pl-pds">"</span></span> <span class="pl-st">class</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span> data<span class="pl-k">-</span>id<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>42<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span>Your profile<span class="pl-k">!&lt;</span>/a<span class="pl-k">&gt;</span></pre></div>
+<pre><code class="language-markup">&lt;a href="/user/42" class="profile" data-id="42"&gt;Your profile!&lt;/a&gt;</code></pre>
 
 <p>We could write a script (using jquery) to redirect the user like so:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// Intercept the user click</span>
-$(<span class="pl-s1"><span class="pl-pds">"</span>a.profile<span class="pl-pds">"</span></span>).<span class="pl-s3">click</span>(<span class="pl-st">function</span>(<span class="pl-vpf">e</span>) {
+<pre class="line-numbers"><code class="language-javascript">
+// Intercept the user click
+$("a.profile").click(function(e) {
   e.preventDefault();
 
-  <span class="pl-s">var</span> userId <span class="pl-k">=</span> $(<span class="pl-v">this</span>).attr(<span class="pl-s1"><span class="pl-pds">"</span>data-id<span class="pl-pds">"</span></span>);
+  var userId = $(this).attr("data-id");
 
-  <span class="pl-c">// Redirecting to route named "user_profile" passing an id</span>
-  Backbone.Router.<span class="pl-s3">go</span>(<span class="pl-s1"><span class="pl-pds">"</span>user_profile<span class="pl-pds">"</span></span>, [userId]);
-});</pre></div>
+  // Redirecting to route named "user_profile" passing an id
+  Backbone.Router.go("user_profile", [userId]);
+});</code></pre>
 
 <p>As the first parameter to the <code>go</code> method can be an object, we could also write the previous script in this manner:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// Intercept the user click</span>
-$(<span class="pl-s1"><span class="pl-pds">"</span>a.profile<span class="pl-pds">"</span></span>).<span class="pl-s3">click</span>(<span class="pl-st">function</span>(<span class="pl-vpf">e</span>) {
+<pre class="line-numbers"><code class="language-javascript">
+// Intercept the user click
+$("a.profile").click(function(e) {
   e.preventDefault();
 
-  <span class="pl-c">// Redirecting to route using the path defined in the href attribute</span>
-  Backbone.Router.<span class="pl-s3">go</span>({ <span class="pl-s1"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-v">this</span>.<span class="pl-sc">href</span> });
-});</pre></div>
+  // Redirecting to route using the path defined in the href attribute
+  Backbone.Router.go({ "path": this.href });
+});
+</code></pre>
 
 <h2>
 <a id="route-declaration-parameters" class="anchor" href="#route-declaration-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Route declaration parameters</h2>
 
 <p>The <code>path</code> and <code>action</code> parameters are the base of a route. But a few more parameters exist to extend the control of the route.</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">// Definition object for a route named 'user_edit'</span>
+<pre class="line-numbers"><code class="language-javascript">
+// Definition object for a route named 'user_edit'
 {
-  <span class="pl-c">// Path with an 'id' parameter</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>/user/:id/edit<span class="pl-pds">"</span></span>,
+  // Path with an 'id' parameter
+  "path": "/user/:id/edit",
 
-  <span class="pl-c">// Route will only be executed if the user is logged in</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>authed<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span>,
+  // Route will only be executed if the user is logged in
+  "authed": true,
 
-  <span class="pl-c">// Execute triggers before the 'action' controller</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>before<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
-    { <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>core:display<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>cache<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span> },
-    <span class="pl-s1"><span class="pl-pds">"</span>users:display<span class="pl-pds">"</span></span>
+  // Execute triggers before the 'action' controller
+  "before": [
+    { "name": "core:display", "cache": true },
+    "users:display"
   ],
 
-  <span class="pl-c">// Main controller for the route</span>
-  <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">action</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>(<span class="pl-vpf">userId</span>) {
-    <span class="pl-c">// Render a user edit form</span>
+  // Main controller for the route
+  "action": function(userId) {
+    // Render a user edit form
   },
 
-  <span class="pl-c">// Execute triggers after the 'action' controller</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>after<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
-    <span class="pl-s1"><span class="pl-pds">"</span>core:post_triggers<span class="pl-pds">"</span></span>
+  // Execute triggers after the 'action' controller
+  "after": [
+    "core:post_triggers"
   ],
 
-  <span class="pl-c">// Executed when user is routed away from this route</span>
-  <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">close</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>() {
-    <span class="pl-c">// Return false to cancel the routing</span>
-    <span class="pl-k">return</span> <span class="pl-s3">confirm</span>(<span class="pl-s1"><span class="pl-pds">"</span>Are you sure you want to leave this page?<span class="pl-pds">"</span></span>);
+  // Executed when user is routed away from this route
+  "close": function() {
+    // Return false to cancel the routing
+    return confirm("Are you sure you want to leave this page?");
   }
-}</pre></div>
+}</code></pre>
 
 <h3>
 <a id="catching-client-side-404-and-403" class="anchor" href="#catching-client-side-404-and-403" aria-hidden="true"><span class="octicon octicon-link"></span></a>Catching client-side 404 and 403</h3>
@@ -248,21 +264,22 @@ $(<span class="pl-s1"><span class="pl-pds">"</span>a.profile<span class="pl-pds"
 <p>A route named 404 can be declared to catch all non-existent routes.
 In the same way a route can be named 403 to catch accessing restricted routes.</p>
 
-<div class="highlight highlight-javascript"><pre>Backbone.Router.map(<span class="pl-st">function</span>() {
-  <span class="pl-c">// 404 controller</span>
-  <span class="pl-v">this</span>.route(<span class="pl-s1"><span class="pl-pds">"</span>404<span class="pl-pds">"</span></span>, {
-    <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">action</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>(<span class="pl-vpf">path</span>) {
-      <span class="pl-c">// Couldn't find what you're looking for =/</span>
+<pre class="line-numbers"><code class="language-javascript">
+Backbone.Router.map(function() {
+  // 404 controller
+  this.route("404", {
+    "action": function(path) {
+      // Couldn't find what you're looking for =/
     }
   });
 
-  <span class="pl-c">// 403 controller</span>
-  <span class="pl-v">this</span>.route(<span class="pl-s1"><span class="pl-pds">"</span>403<span class="pl-pds">"</span></span>, {
-    <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">action</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>(<span class="pl-vpf">path</span>) {
-      <span class="pl-c">// Sorry you can't access this content =(</span>
+  // 403 controller
+  this.route("403", {
+    "action": function(path) {
+      // Sorry you can't access this content =(
     }
   });
-});</pre></div>
+});</code></pre>
 
 <p>For convenience, the action methods will receive the current <code>window.location.pathname</code> as the first argument.</p>
 
@@ -277,16 +294,17 @@ In the same way a route can be named 403 to catch accessing restricted routes.</
 
 <p>This parameter can be overridden using any <code>Backbone.Events</code> instance.</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> App <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Backbone.Marionette</span>.Application();
+<pre class="line-numbers"><code class="language-javascript">
+var App = new Backbone.Marionette.Application();
 
-<span class="pl-c">// Create a custom event aggregator</span>
-<span class="pl-s">var</span> myDispatcher <span class="pl-k">=</span> _.extend({}, Backbone.Events);
+// Create a custom event aggregator
+var myDispatcher = _.extend({}, Backbone.Events);
 
-<span class="pl-c">// Pass the custom object to the Router</span>
-Backbone.Router.dispatcher <span class="pl-k">=</span> myDispatcher;
+// Pass the custom object to the Router
+Backbone.Router.dispatcher = myDispatcher;
 
-App.<span class="pl-sc">start</span>();
-Backbone.Router.<span class="pl-sc">start</span>(App);</pre></div>
+App.start();
+Backbone.Router.start(App);</code></pre>
 
 <h2>
 <a id="trigger-declaration" class="anchor" href="#trigger-declaration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trigger declaration</h2>
@@ -295,27 +313,29 @@ Backbone.Router.<span class="pl-sc">start</span>(App);</pre></div>
 
 <p>They can be a simple <code>String</code> for the simple ones:</p>
 
-<div class="highlight highlight-javascript"><pre>{
-  <span class="pl-c">// ...</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>before<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
-    <span class="pl-s1"><span class="pl-pds">"</span>core<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>module<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>submodule<span class="pl-pds">"</span></span>
+<pre class="line-numbers"><code class="language-javascript">
+{
+  // ...
+  "before": [
+    "core",
+    "module",
+    "submodule"
   ],
-  <span class="pl-c">// ...</span>
-}</pre></div>
+  // ...
+}</code></pre>
 
 <p>They can also be declared as an object with different parameters:</p>
 
-<div class="highlight highlight-javascript"><pre>{
-  <span class="pl-c">// ...</span>
-  <span class="pl-s1"><span class="pl-pds">"</span>before<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
-    { <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>core<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>cache<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span> },
-    { <span class="pl-s1"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>module<span class="pl-pds">"</span></span>, args<span class="pl-k">:</span> [foo, bar] },
-    <span class="pl-s1"><span class="pl-pds">"</span>submodule<span class="pl-pds">"</span></span>
+<pre class="line-numbers"><code class="language-javascript">
+{
+  // ...
+  "before": [
+    { "name": "core", "cache": true },
+    { "name": "module", args: [foo, bar] },
+    "submodule"
   ],
-  <span class="pl-c">// ...</span>
-}</pre></div>
+  // ...
+}</code></pre>
 
 <p><strong>Most importantly:</strong> Each declared route becomes a trigger itself so that routes can build on each other.</p>
 
@@ -324,16 +344,17 @@ Backbone.Router.<span class="pl-sc">start</span>(App);</pre></div>
 
 <p>Each route can receive an <code>authed</code> boolean parameter to declare if the route should be interpreted when the user is logged in or not.</p>
 
-<div class="highlight highlight-javascript"><pre>Backbone.Router.map(<span class="pl-st">function</span>() {
-  <span class="pl-c">// Declare secure route</span>
-  <span class="pl-v">this</span>.route(<span class="pl-s1"><span class="pl-pds">"</span>secure_route<span class="pl-pds">"</span></span>, {
-    <span class="pl-s1"><span class="pl-pds">"</span>path<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">"</span>/admin/users<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>authed<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-en">action</span><span class="pl-pds">"</span></span>: <span class="pl-st">function</span>() {
-      <span class="pl-c">// Display list of users</span>
+<pre class="line-numbers"><code class="language-javascript">
+Backbone.Router.map(function() {
+  // Declare secure route
+  this.route("secure_route", {
+    "path": "/admin/users",
+    "authed": true,
+    "action": function() {
+      // Display list of users
     }
   });
-});</pre></div>
+});</code></pre>
 
 <p>To make a route be interpreted in both cases (i.e. when the user is logged in or logged out),
 simply leave out the <code>authed</code> parameter in the route declaration.</p>
@@ -343,9 +364,10 @@ simply leave out the <code>authed</code> parameter in the route declaration.</p>
 <p>Only the server has the authority to tell if a connected client is a logged in user or not.
 So for this system to actually work, the server has to print out a small piece of JavaScript to tell the router the current client's state:</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-k">&lt;</span><span class="pl-c1">script</span> <span class="pl-c1">type</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-c1">src</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>backbone.router.js<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span><span class="pl-c1">script</span><span class="pl-k">&gt;</span></span>
-<span class="pl-s2"><span class="pl-k">&lt;</span><span class="pl-c1">script</span> <span class="pl-c1">type</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span></span>
-<span class="pl-s2"><span class="pl-c1">window</span><span class="pl-k">.</span><span class="pl-c1">logged_in</span> <span class="pl-k">=</span> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span> <span class="pl-k">if</span> (<span class="pl-vo">$_SESSION</span>[<span class="pl-s1"><span class="pl-pds">'</span>logged_in<span class="pl-pds">'</span></span>]): </span><span class="pl-pse"><span class="pl-s2">?</span>&gt;</span>true<span class="pl-pse">&lt;?php</span><span class="pl-s2"> <span class="pl-k">else</span>: </span><span class="pl-pse"><span class="pl-s2">?</span>&gt;</span>false<span class="pl-pse">&lt;?php</span><span class="pl-s2"> <span class="pl-k">endif</span>; </span><span class="pl-pse"><span class="pl-s2">?</span>&gt;</span>;
+<pre class="line-numbers"><code class="language-markup">
+&lt;script type="text/javascript" src="backbone.router.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+window.logged_in = &lt;?php if ($_SESSION['logged_in']): ?&gt;true&lt;?php else: ?&gt;false&lt;?php endif; ?&gt;;
 
 $(funtion() {
   // Starting the marionette app
@@ -356,7 +378,7 @@ $(funtion() {
     "authed": window.logged_in
   });
 });
-&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+&lt;/script&gt;</code></pre>
 
 <h2>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
@@ -368,6 +390,8 @@ therefore an <code>.htaccess</code> file activating mod_rewrite and redirecting 
       </section>
     </div>
 
-    
+    <!-- Include JS -->
+    <script type="text/javascript" src="javascripts/prism.js"></script>
+    <script type="text/javascript" src="javascripts/main.js"></script>
   </body>
 </html>
